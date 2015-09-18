@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+
+    <style>
+
+        body{
+            margin:0;
+        }
+      #enclose{
+          margin-top: 6em;;
+          margin-left:18em;
+          height:20em;
+          width:43em;
+          background-color:darkgoldenrod;
+      }
+       #request {
+           padding-top:4em;
+           margin-left:40%;
+           padding-bottom: 1em;;
+       }
+        input{
+            margin-left:8%;
+            height: 2em;
+            width:40em;
+        }
+        #data{max-width:40em;}
+
+        #submit{
+            margin-top: 1em;
+            margin-left: 44%;
+            width:6em;
+        }
+       #verification p{padding-top: 1em;margin-left: 30%}
+        #question1,#question2,#question3,#question4,#question0{padding-bottom:0.4em;margin-left:22px; }
+
+#finalsubmission{background-color: burlywood;padding-top: 1em;}
+#finalsubmission div{padding-bottom: 1em;margin-top: 2em;margin-left: 4%}
+span{margin-left:-3em}
+   #mistake{width:24em;height:3em;padding-top:1em;padding-left:1em;margin-left:12%;margin-top:4em;color: black}
+#name,#self,#tastes,#address,#gender{}
+        #header{margin-left: 40%!important;}
+    </style>
+
+    <script src="jquery-1.11.3%20(1).js"></script>
+
+</head>
+<body>
+
+<div id="enclose">
+    <div id="mistake"></div>
+    <div id="request">Please Answer the Questions</div>
+
+    <div id="question0"></div>
+    <div id="question1"></div>
+    <div id="question2"></div>
+    <div id="question3"></div>
+    <div id="question4"></div>
+
+
+
+    <form id="form">
+    <input type="text" id="data" name="data" placeholder="enter the answer">
+    <input type="submit" contenteditable="true" value="submit" id="submit">
+    </form>
+</div>
+<div id="check"></div>
+
+<div id="finalsubmission">
+  <div id="header"></div>
+<div>Q1. Hi I am bot, here to help you to set up your profile. Would you type your name for me<div><span id="name"></span></div></div>
+<div>Q2: Hi John, Nice to meet you. Happy to have you here. Can you tell me few lines about you<div><span id="self"></span></div></div>
+<div>Q3: Good to hear about you John. I would need you gender to address you. Type ‘f’ for female, and ‘m’ for male.<div><span id="gender"></span></div></div>
+<div>Q4: So Mr. John, where do you live in Hyderabad? A complete address would make my job easier<div><span id="address"></span></div></div>
+<div>Q5: Mr. John, do you like chocolates or ice-cream? Also enter you contact number<div><span id="tastes"></span></div></div>
+</div>
+
+<script type=>
+
+
+     var questions=[];
+    questions[0]= 1+")"+ " Hi I am bot, here to help you to set up your profile. Would you type your name for me";
+    questions[1]=2+")"+"Hi John, Nice to meet you. Happy to have you here. Can you tell me few lines about you";
+    questions[2]=3+")"+ "Good to hear about you John. I would need you gender to address you. Type ‘f’ for female, and ‘m’ for male.";
+    questions[3]=4+")"+"So Mr. John, where do you live in Hyderabad? A complete address would make my job easier";
+    questions[4]=5+")"+ "Last step Mr. John, do you like chocolates or ice-cream? Also enter you contact number";
+      var i=0;
+
+    for(k=0;k<5;k++){
+    $("#question"+k).text(questions[k]);
+    }
+    for(k=0;k<5;k++){
+        $("#question"+k).css("display","none");
+    }
+    if(!localStorage.i)
+    { localStorage.i="";}
+    $(document).ready(function() {
+       $("#finalsubmission").hide();
+        var finalcase=localStorage.i.length;
+//default case
+        if(finalcase==5){
+   $("#enclose").hide();
+  $("#finalsubmission").show();
+
+            var node1=document.createTextNode("ANS. "+localStorage.first);
+            var node2=document.createTextNode("ANS. "+localStorage.second);
+            var node3=document.createTextNode("ANS. "+localStorage.third);
+            var node4=document.createTextNode("ANS. "+localStorage.fourth);
+            var node5=document.createTextNode("ANS. "+localStorage.fifth);
+            var header=document.createTextNode("FINAL SUBMISSION")
+            document.getElementById("name").appendChild(node1);
+            document.getElementById("self").appendChild(node2);
+            document.getElementById("gender").appendChild(node3);
+            document.getElementById("address").appendChild(node4);
+            document.getElementById("tastes").appendChild(node5);
+            document.getElementById("header").appendChild(header);
+        }
+
+        $("#question" + localStorage.i.length).css("display", "block");
+        $("#submit").click(function (event) {
+            event.preventDefault();
+
+            $("#mistake").text("");
+            var x = document.getElementById("data").value;
+            var length=localStorage.i.length;
+         console.log(length);
+            $("#data").val("");
+            switch (length){
+                case 0:
+                    first(x);
+                    break;
+                case 1:
+                        console.log(x);
+                        second(x);
+                    break;
+                case 2:
+                    third(x);
+                    break;
+                case 3:
+                        console.log(x);
+                    four(x);
+                    break;
+                case 4:
+                    fifth(x);
+                    break;
+
+            }
+
+                   });
+
+
+       });
+
+     function first(x){
+         if (verification1(x) == "true") {
+             $("#question" + localStorage.i.length).css("display", "none");
+             localStorage.first = x;
+             localStorage.i = localStorage.i+ 1;
+             console.log(34535);
+             $("#question" + localStorage.i.length).css("display", "block");
+         }
+         else {
+             verification1(x);
+         }
+     }
+
+     function second(y) {
+         if (verification2(y) == "true") {
+             $("#question" + localStorage.i.length).css("display", "none");
+             localStorage.second = y;
+             localStorage.i = localStorage.i + 1;
+             $("#question" + localStorage.i.length).css("display", "block");
+         }
+         else {
+             verification2(y);
+         }
+     }
+
+     function third(z) {
+         if (verification3(z) == "true") {
+             console.log(z);
+             $("#question" + localStorage.i.length).css("display", "none");
+             localStorage.third = z;
+             localStorage.i = localStorage.i + 1;
+             $("#question" + localStorage.i.length).css("display", "block");
+         }
+         else {
+             verification3(z);
+         }
+     }
+
+     function four(a) {
+         if (verification4(a) == "true") {
+             console.log(a);
+             $("#question" + localStorage.i.length).css("display", "none");
+             localStorage.fourth = a;
+             localStorage.i = localStorage.i + 1;
+             $("#question" + localStorage.i.length).css("display", "block");
+
+         }
+         else {
+             verification4(a);
+         }
+     }
+
+     function  fifth(b) {
+         if (verification5(b) == "true") {
+             $("#question" + localStorage.i.length).css("display", "none");
+             localStorage.fifth = b;
+             localStorage.i = localStorage.i + 1;
+             $("#form").css("display","none");
+             $("#request").css("display","none");
+             $("#enclose").css("display","none")
+             $("#check").text("That would be all Mr. John. You are all set.")
+
+             var d= document.createElement("a")
+             d.setAttribute("href","");
+             d.setAttribute("id","imagelink");
+             var word="click here to view your profile"
+             var text=document.createTextNode(word);
+             d.appendChild(text);
+             document.getElementById("check").appendChild(d);
+
+             var node1=document.createTextNode("ANS. "+localStorage.first);
+             var node2=document.createTextNode("ANS. "+localStorage.second);
+             var node3=document.createTextNode("ANS. "+localStorage.third);
+             var node4=document.createTextNode("ANS. "+localStorage.fourth);
+             var node5=document.createTextNode("ANS. "+localStorage.fifth);
+             document.getElementById("name").appendChild(node1);
+             document.getElementById("self").appendChild(node2);
+             document.getElementById("gender").appendChild(node3);
+             document.getElementById("address").appendChild(node4);
+             document.getElementById("tastes").appendChild(node5);
+             $("#check").css("color","red");
+             $("#imagelink").css("color","red")
+
+             $("a").click(function(event){
+                 console.log(243);
+                 event.preventDefault();
+                 $("#check").hide();
+                 $("#imagelink").hide();
+                 $("#finalsubmission").show();
+
+             });
+
+         }
+         else {
+             verification5(b);
+         }
+
+     }
+
+
+
+
+    function verification1(data){
+        console.log(data);
+    console.log(data.length);
+        if(data.length < 6){$("#mistake").text("ERROR :the length of characters should be greater than 6");console.log(234); }
+        else if(typeof(data[0])!="string"){ $("#mistake").text("ERROR :name should start with character only");}
+        else{
+               return "true";
+        }
+    }
+
+    function verification2(data){
+        if(data.length < 20){ $("#mistake").text("ERROR :the length of characters should be greater than 19");}
+     else return "true";
+    }
+
+    function verification3(data){
+        if(data=="m"){
+            return "true"
+        } else if(data=="f"){return "true"}else{$("#mistake").text("ERROR :the answer should be either 'm' or 'f' ");}
+    }
+// for address
+
+      function verification4(data){
+          if($("#mistake").text()=="") {
+              if (data.length < 11) {
+                  $("#mistake").text( "ERROR :Your address length should be minimum 10  ");
+
+              }
+              else {
+                  return "true";
+              }
+          }
+          else{return ""}
+    }
+
+    function verification5(data){
+
+        console.log(localStorage.i.length)
+    var n=data.search("chocolates");
+     var m=data.search("ice");
+        var exp=/[0-9]/g;
+        var number=data.match(exp);
+        console.log(number);
+
+        if(m== -1&&n==-1){
+            return $("#mistake").text("ERROR :should choose either icecream or chocolates");
+        }
+        else if(number[0]!=("7"||"8"||"9")&& number.length!=10){
+            return $("#mistake").text("ERROR :number is not correct ,check once");
+        }else if(number==null){return $("#mistake").text("ERROR :number is necessary");}
+        else{ return "true" }
+    }
+</script>
+</body>
+</html>
